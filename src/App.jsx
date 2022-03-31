@@ -1,5 +1,6 @@
 import { Button, Flex, Stack } from "@chakra-ui/react";
 
+import { motion } from "framer-motion"
 import { React, useState } from "react";
 
 import RatingText from "./componentes/RatingText";
@@ -7,6 +8,9 @@ import Submit from "./componentes/Submit";
 import ThankYou from "./componentes/ThankYou";
 
 function App() {
+
+  const MotionButton = motion(Button)
+
   const [submit, setSubmit] = useState(false);
 
   const handleSubmit = () => {
@@ -17,10 +21,11 @@ function App() {
 
   const handleClick = (i) => {
     if (click !== i) {
-      setClick(false);
+      setClick(null);
       setClick(i);
+      console.log('click');
     } else if (click === i) {
-      setClick(false);
+      setClick(null);
     } else {
       setClick(i);
     }
@@ -47,11 +52,12 @@ function App() {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                {[...Array(5)].map((rating, i) => {
+                {[...Array(5)].map((item, i) => {
                   const numberRating = i + 1;
-
+                  console.log(i);
                   return (
-                    <Button
+                    <MotionButton
+                      onClick={() => handleClick(i + 1)}
                       key={i}
                       display="flex"
                       justifyContent="center"
@@ -63,10 +69,9 @@ function App() {
                       backgroundColor={click === numberRating ? "primary.100" : "hsla(216, 12%, 40%, 0.1)"}
                       borderRadius="50%"
                       color={click === numberRating ? "white" : "primary.200"}
-                      onClick={handleClick}
                     >
                       {numberRating}
-                    </Button>
+                    </MotionButton>
                   );
                 })}
               </Stack>
